@@ -1,0 +1,6 @@
+C:\Users\willi\source\repos\MPGH-Source\Output\GameServer.exe.config
+C:\Users\willi\source\repos\MPGH-Source\Output\GameServer.exe
+C:\Users\willi\source\repos\MPGH-Source\Output\GameServer.pdb
+C:\Users\willi\source\repos\MPGH-Source\GameServer\obj\Debug\GameServer.csprojAssemblyReference.cache
+C:\Users\willi\source\repos\MPGH-Source\GameServer\obj\Debug\GameServer.exe
+C:\Users\willi\source\repos\MPGH-Source\GameServer\obj\Debug\GameServer.pdb

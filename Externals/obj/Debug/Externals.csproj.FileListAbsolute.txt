@@ -1,0 +1,13 @@
+C:\Users\willi\source\repos\MPGH-Source\Output\grpc_csharp_ext.x86.dll
+C:\Users\willi\source\repos\MPGH-Source\Output\grpc_csharp_ext.x64.dll
+C:\Users\willi\source\repos\MPGH-Source\Output\libgrpc_csharp_ext.x86.so
+C:\Users\willi\source\repos\MPGH-Source\Output\libgrpc_csharp_ext.x64.so
+C:\Users\willi\source\repos\MPGH-Source\Output\libgrpc_csharp_ext.x86.dylib
+C:\Users\willi\source\repos\MPGH-Source\Output\libgrpc_csharp_ext.x64.dylib
+C:\Users\willi\source\repos\MPGH-Source\Output\Externals.dll.config
+C:\Users\willi\source\repos\MPGH-Source\Output\Externals.dll
+C:\Users\willi\source\repos\MPGH-Source\Output\Externals.pdb
+C:\Users\willi\source\repos\MPGH-Source\Externals\obj\Debug\Externals.csproj.CopyComplete
+C:\Users\willi\source\repos\MPGH-Source\Externals\obj\Debug\Externals.dll
+C:\Users\willi\source\repos\MPGH-Source\Externals\obj\Debug\Externals.pdb
+C:\Users\willi\source\repos\MPGH-Source\Externals\obj\Debug\Externals.csprojAssemblyReference.cache
