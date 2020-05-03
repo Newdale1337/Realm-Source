@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Reflection;
+using System.Threading;
 
 namespace Externals.Utilities
 {
@@ -67,6 +69,7 @@ namespace Externals.Utilities
             Stopwatch sw = Stopwatch.StartNew();
             action();
             LogIfDebug($"{msg} {{{sw.Elapsed.Seconds}s {sw.Elapsed.Milliseconds}ms}}");
+            sw = null;
         }
     }
 }

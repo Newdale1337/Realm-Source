@@ -1,39 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Runtime.Serialization;
+using System.Xml.Linq;
 using Externals.Utilities;
-using Newtonsoft.Json;
 
 namespace Externals.Models.GameDataModels
 {
     public class ObjectLibrary
     {
+
         public static Dictionary<string, ObjectProperties> IdToProperties { get; set; }
-        public static Dictionary<string, int> IdToType { get; set; }
-        public static Dictionary<int, ObjectProperties> TypeToProperties { get; set; }
-        public static Dictionary<int, string> TypeToId { get; set; }
+        private static Dictionary<string, int> IdToType { get; set; }
+        private static Dictionary<int, ObjectProperties> TypeToProperties { get; set; }
+        private static Dictionary<int, string> TypeToId { get; set; }
 
-        public static ObjectProperties GetProperties(string id)
-        {
-            if (!IdToProperties.TryGetValue(id, out ObjectProperties props))
-            {
-                LoggingUtils.LogIfDebug($"{id} not found...");
-                return null;
-            }
-
-            return props;
-        }
         public static ObjectProperties GetProperties(int type)
         {
-            if (!TypeToProperties.TryGetValue(type, out ObjectProperties props))
-            {
-                LoggingUtils.LogIfDebug($"{type} not found...");
-                return null;
-            }
+            if (TypeToProperties.TryGetValue(type, out ObjectProperties props))
+                return props;
 
-            return props;
+            return null;
+        }
+        public static ObjectProperties GetProperties(string id)
+        {
+            if (IdToProperties.TryGetValue(id, out ObjectProperties props))
+                return props;
+
+            return null;
         }
 
         public static void Initialize()
@@ -43,23 +35,19 @@ namespace Externals.Models.GameDataModels
 
             TypeToProperties = new Dictionary<int, ObjectProperties>();
             TypeToId = new Dictionary<int, string>();
+
+            LoggingUtils.LogIfDebug("ObjectLibrary Initialized");
         }
 
-        public static void ParseJson(string data)
+        public static void ParseJson(XElement elem)
         {
-            var json = JsonConvert.DeserializeObject<ObjectProperties[]>(data, new JsonSerializerSettings()
-            {
-                Culture = CultureInfo.InvariantCulture,
-                Converters = {new AllowHex()},
-            });
-            foreach (var obj in json)
-            {
-                IdToProperties[obj.Id] = obj;
-                IdToType[obj.Id] = obj.Type;
+            int type = elem.IntAtr("type");
+            string id = elem.StringAtr("id");
 
-                TypeToProperties[obj.Type] = obj;
-                TypeToId[obj.Type] = obj.Id;
-            }
+            TypeToProperties[type] = new ObjectProperties(elem, id, type);
+            IdToProperties[id] = new ObjectProperties(elem, id, type);
+            IdToType[id] = type;
+            TypeToId[type] = id;
         }
     }
 }

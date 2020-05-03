@@ -10,7 +10,7 @@ namespace VirtualServer.Requests.Account
 
         public override void Handle(RequestContext requestContext, NameValueCollection query)
         {
-            using (VirtualServerDatabase db = new VirtualServerDatabase(Database))
+            using (VirtualServerDatabase db = Database as VirtualServerDatabase)
             {
             }
         }

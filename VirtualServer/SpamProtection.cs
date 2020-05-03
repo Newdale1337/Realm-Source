@@ -44,7 +44,7 @@ namespace VirtualServer
 
             if (filter.Suspended && suspendedDelta.Minutes <= TimeoutMinutes)
             {
-                c.WriteError($"Account is suspended for {(TimeoutMinutes * 60) - suspendedDelta.Seconds}s");
+                c.WriteError($"Ip is suspended for {(TimeoutMinutes * 60) - suspendedDelta.Seconds}s");
                 return false;
             }
             else if (filter.Suspended && suspendedDelta.Minutes >= TimeoutMinutes)

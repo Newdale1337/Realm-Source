@@ -10,7 +10,7 @@ namespace VirtualServer
     {
         public abstract string RequestType { get; }
 
-        public FirestoreDatabase Database { get; set; }
+        public VirtualServerDatabase Database { get; set; }
         protected void WriteXml(RequestContext requestContext, string xml) => Write(requestContext.Response(xml), "application/xml");
         protected void WriteXml(RequestContext requestContext, byte[] bytes) => Write(requestContext.Response(bytes), "application/xml");
         protected void WriteJSON(RequestContext requestContext, byte[] bytes) => Write(requestContext.Response(bytes), "application/json");

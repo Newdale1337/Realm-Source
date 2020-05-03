@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 using Externals.Models.GameDataModels;
 using Externals.Utilities;
 
@@ -7,7 +8,7 @@ namespace Externals.Resources
 {
     public class GameResources
     {
-        private static string OBJECTS_PATH = "Resources/Game/Objects";
+        private const string XmlsPath = "Resources/Game/Objects";
         
         private static void Initialize()
         {
@@ -20,15 +21,18 @@ namespace Externals.Resources
             Initialize();
             ParseJson();
             LoggingUtils.LogIfDebug($"Finished parsing game resources in {{{sw.Elapsed.Seconds}s {sw.Elapsed.Milliseconds}}}");
+            sw = null;
         }
 
         private static void ParseJson()
         {
-            foreach (var file in new DirectoryInfo(OBJECTS_PATH).GetFiles("*.json", SearchOption.AllDirectories))
+            foreach (var file in new DirectoryInfo(XmlsPath).GetFiles("*.xml", SearchOption.AllDirectories))
             {
-                string data = File.ReadAllText(file.FullName);
+                Task.Factory.StartNew(() =>
+                {
+                    string data = File.ReadAllText(file.FullName);
 
-                ObjectLibrary.ParseJson(data);
+                });
             }
         }
     }

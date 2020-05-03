@@ -117,11 +117,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants\PetYardTypes.cs" />
     <Compile Include="Database\CachedCollections.cs" />
     <Compile Include="Database\FirestoreDatabase.cs" />
     <Compile Include="Database\Returnables\RegisterReturns.cs" />
     <Compile Include="Database\Returnables\VerifyReturns.cs" />
     <Compile Include="Database\VirtualServerDatabase.cs" />
+    <Compile Include="Models\FirestoreModels\AccountLockModel.cs" />
     <Compile Include="Models\FirestoreModels\AccountModel.cs" />
     <Compile Include="Models\FirestoreModels\CaimpaignsModel.cs" />
     <Compile Include="Models\FirestoreModels\ClassStatsModel.cs" />
@@ -143,8 +145,11 @@
     <Compile Include="Utilities\JsonUtils.cs" />
     <Compile Include="Utilities\LoggingUtils.cs" />
     <Compile Include="Utilities\MiscUtils.cs" />
+    <Compile Include="Utilities\RotmgUtils.cs" />
+    <Compile Include="Utilities\StringUtils.cs" />
     <Compile Include="Utilities\WebServerUtils.cs" />
     <Compile Include="Models\XmlModels\CharacterListModel.cs" />
+    <Compile Include="Utilities\XElementUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

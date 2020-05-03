@@ -1,9 +1,9 @@
 ﻿using System.Collections.Specialized;
+using System.Globalization;
 using Anna.Request;
 using Externals.Database;
 using Externals.Database.Returnables;
 using Externals.Utilities;
-
 namespace VirtualServer.Requests.Account
 {
     public class Register : WebRequest
@@ -12,15 +12,12 @@ namespace VirtualServer.Requests.Account
 
         public override void Handle(RequestContext requestContext, NameValueCollection query)
         {
-            using (VirtualServerDatabase db = new VirtualServerDatabase(Database))
-            {
-                string register = db.Register(query["newGUID"], query["newPassword"], query["name"]);
+            string result = Database.Register(query["newGUID"], query["newPassword"], query["name"], requestContext.Request.GetIp());
 
-                if (register == RegisterReturns.ACCOUNT_EXISTS || register == RegisterReturns.NAME_EXISTS)
-                    requestContext.WriteError(register);
-                else
-                    requestContext.Respond("<Success/>");
-            }
+            if (result == RegisterReturns.ACCOUNT_EXISTS || result == RegisterReturns.NAME_EXISTS)
+                requestContext.WriteError(result);
+            else
+                requestContext.Respond($"<Success><Token>{result}</Token></Success>");
         }
     }
 }

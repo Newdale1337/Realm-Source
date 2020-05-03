@@ -12,6 +12,7 @@ namespace Externals.Utilities
         public static List<T> DocumentToList<T>(this CollectionReference c) => c.GetSnapshot().Select(x => x.ConvertTo<T>()).ToList();
 
         public static QuerySnapshot GetSnapshot(this Query query) => query.GetSnapshotAsync().GetAwaiter().GetResult();
+        public static DocumentSnapshot GetSnapshot(this DocumentReference doc) => doc.GetSnapshotAsync().GetAwaiter().GetResult();
         public static WriteResult Create(this DocumentReference document, object documentData) => document.CreateAsync(documentData).GetAwaiter().GetResult();
         public static WriteResult Set(this DocumentReference document, object documentData) => document.SetAsync(documentData).GetAwaiter().GetResult();
         public static DocumentReference FirstDocument(this Query query)

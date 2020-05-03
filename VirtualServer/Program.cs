@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using Externals.Database;
 using Externals.Resources;
+using Externals.Utilities;
 
 namespace VirtualServer
 {
@@ -12,6 +13,7 @@ namespace VirtualServer
 
         public static void Main(string[] args)
         {
+            AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) => LoggingUtils.LogErrorIfDebug(eventArgs.ExceptionObject.ToString());
             WebResources.Load();
             //GameResources.Load();
 

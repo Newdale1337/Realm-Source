@@ -17,8 +17,12 @@ namespace Externals.Models.FirestoreModels
         [FirestoreProperty("name")] public string Name { get; set; }
         [FirestoreProperty("hash")] public string Hash { get; set; }
         [FirestoreProperty("salt")] public string Salt { get; set; }
+        [FirestoreProperty("ip-address")] public string IpAddress { get; set; }
         [FirestoreProperty("creation-date")] public string CreationDate { get; set; }
 
-        public override void CreateDocument(FirestoreDb db) => db.Collection("logins").Document().Create(this);
+        public override void CreateDocument(FirestoreDb db) => db.Collection("logins").Document().CreateAsync(this);
+        public override DocumentReference GetDocument(FirestoreDb db) => db.Collection("logins").FirstDocument();
+        public override void UpdateDocument(FirestoreDb db) { }
+        public override void UpdateFieldAsync(FirestoreDb db, string field, object data) { }
     }
 }

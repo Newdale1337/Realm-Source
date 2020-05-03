@@ -22,7 +22,7 @@ namespace VirtualServer
         private Stopwatch Timer { get; set; }
         private ManualResetEvent KeepAlive { get; set; }
         private SpamProtection SpamProtection { get; set; }
-        public FirestoreDatabase Api { get; set; }
+        public VirtualServerDatabase Database { get; set; }
 
         public Server()
         {
@@ -37,7 +37,7 @@ namespace VirtualServer
             SpamProtection = new SpamProtection();
             WebRequests = new Dictionary<string, WebRequest>();
             KeepAlive = new ManualResetEvent(false);
-            Api = new FirestoreDatabase();
+            Database = new VirtualServerDatabase();
         }
 
         private void Load()
@@ -60,8 +60,6 @@ namespace VirtualServer
             {
                 server.GET("/").Subscribe(Response);
 
-                using (VirtualServerDatabase db = new VirtualServerDatabase(Api)) { }
-
                 foreach (var request in WebRequests)
                 {
                     server.POST(request.Key).Subscribe(Response);
@@ -79,6 +77,11 @@ namespace VirtualServer
         {
             try
             {
+                if (!Database.Loaded)
+                {
+                    context.Respond($"<Error>Server is loading up.</Error>", 500);
+                    return;
+                }
                 if (!SpamProtection.IsSpam(context)) return;
 
                 LoggingUtils.LogIfDebug($"Handling '{context.Request.Url.LocalPath}' @{context.Request.GetIp()}");
@@ -87,8 +90,10 @@ namespace VirtualServer
                     try
                     {
                         var request = GetRequest(context.Request.Url.LocalPath, context);
-                        request.Database = Api;
+
+                        request.Database = Database;
                         request?.Handle(context, HttpUtility.ParseQueryString(body));
+                        request = null;
                     }
                     catch (Exception e)
                     {

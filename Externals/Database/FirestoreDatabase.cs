@@ -13,6 +13,7 @@ namespace Externals.Database
         public FirestoreDb Api { get; set; }
         public List<LoginModel> CachedLogins { get; set; }
         public List<AccountModel> CachedAccounts { get; set; }
+        public bool Loaded { get; set; }
 
         public FirestoreDatabase()
         {
@@ -20,8 +21,7 @@ namespace Externals.Database
             {
                 Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", DatabaseSettings.CREDENTIALS_PATH);
                 LoggingUtils.LogIfDebug($"Database authentication completed");
-                Api = FirestoreDb.Create(DatabaseSettings.PROJECT_ID);
-                Task.Factory.StartNew(() => Cache(Api));
+                Task.Factory.StartNew(() => Cache(Api = FirestoreDb.Create(DatabaseSettings.PROJECT_ID).WithWarningLogger(LoggingUtils.LogWarningIfDebug)));
             });
         }
 
@@ -31,6 +31,7 @@ namespace Externals.Database
             {
                 CachedAccounts = db.Collection("accounts").DocumentToList<AccountModel>();
                 CachedLogins = db.Collection("logins").DocumentToList<LoginModel>();
+                Loaded = true;
             });
         }
     }
