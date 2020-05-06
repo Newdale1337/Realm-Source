@@ -38,6 +38,7 @@
     <Reference Include="Anna, Version=1.0.1006.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Anna.1.0.1008\lib\net40\Anna.dll</HintPath>
     </Reference>
+    <Reference Include="Google.Cloud.Firestore, Version=1.1.0.0, Culture=neutral, PublicKeyToken=185c282632e132a0" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Reactive.Core, Version=2.1.30214.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -69,6 +70,7 @@
     <Compile Include="Requests\Account\Register.cs" />
     <Compile Include="Requests\Account\SendVerifyEmail.cs" />
     <Compile Include="Requests\Account\Verify.cs" />
+    <Compile Include="Requests\Character\Delete.cs" />
     <Compile Include="SpamProtection.cs" />
     <Compile Include="Requests\Application\GetLanguageStrings.cs" />
     <Compile Include="Requests\Application\GlobalNews.cs" />

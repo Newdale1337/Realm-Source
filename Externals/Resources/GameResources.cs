@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Externals.Models.GameDataModels;
 using Externals.Utilities;
 
@@ -8,32 +9,45 @@ namespace Externals.Resources
 {
     public class GameResources
     {
-        private const string XmlsPath = "Resources/Game/Objects";
-        
+        private const string XmlsPath = "Resources/Game/Xmls";
+
         private static void Initialize()
         {
             ObjectLibrary.Initialize();
+            GroundLibrary.Initialize();
         }
 
         public static void Load()
         {
             Stopwatch sw = Stopwatch.StartNew();
             Initialize();
-            ParseJson();
-            LoggingUtils.LogIfDebug($"Finished parsing game resources in {{{sw.Elapsed.Seconds}s {sw.Elapsed.Milliseconds}}}");
+            ParseXml(sw);
+
             sw = null;
         }
 
-        private static void ParseJson()
+        private static async void ParseXml(Stopwatch sw)
         {
-            foreach (var file in new DirectoryInfo(XmlsPath).GetFiles("*.xml", SearchOption.AllDirectories))
-            {
-                Task.Factory.StartNew(() =>
-                {
-                    string data = File.ReadAllText(file.FullName);
+            string[] files = Directory.GetFiles(XmlsPath, "*.xml", SearchOption.AllDirectories);
 
+            foreach (var file in files)
+            {
+                await Task.Factory.StartNew(() =>
+                {
+                    XElement rootElem = XElement.Load(file);
+                    foreach (var e in rootElem.Elements("Object"))
+                        ObjectLibrary.ParseXml(e);
+                    foreach (var e in rootElem.Elements("Ground"))
+                        GroundLibrary.ParseXml(e);
                 });
             }
+        }
+
+        public static void Unload()
+        {
+            ObjectLibrary.Unload();
+
+            LoggingUtils.LogIfDebug("GameResources unloaded.");
         }
     }
 }

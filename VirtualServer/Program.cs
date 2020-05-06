@@ -15,9 +15,8 @@ namespace VirtualServer
         {
             AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) => LoggingUtils.LogErrorIfDebug(eventArgs.ExceptionObject.ToString());
             WebResources.Load();
-            //GameResources.Load();
+            GameResources.Load();
 
-            ApplyConsoleSettings();
             VirtualServer = new Server();
         }
 

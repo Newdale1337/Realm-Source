@@ -10,6 +10,8 @@ using Anna;
 using Anna.Request;
 using Anna.Responses;
 using Externals.Database;
+using Externals.Models.FirestoreModels;
+using Externals.Models.XmlModels;
 using Externals.Settings;
 using Externals.Utilities;
 using VirtualServer;
@@ -66,9 +68,7 @@ namespace VirtualServer
                     server.GET(request.Key).Subscribe(Response);
                 }
 
-                LoggingUtils.LogIfDebug($"Requests loaded ({WebRequests.Count})");
                 LoggingUtils.LogIfDebug($"VirtualServer bound to http://{VirtualServerSettings.IpAddress}:{VirtualServerSettings.Port}/");
-                LoggingUtils.LogIfDebug($"VirtualServer fully started {{{Timer.Elapsed.Seconds}s {Timer.Elapsed.Milliseconds}ms}}");
                 KeepAlive.WaitOne();
             }
         }
@@ -77,6 +77,9 @@ namespace VirtualServer
         {
             try
             {
+
+                /*if (MutualServerSettings.WhiteListMode &6 !YourIp.IsWhitelisted) { }*/
+
                 if (!Database.Loaded)
                 {
                     context.Respond($"<Error>Server is loading up.</Error>", 500);

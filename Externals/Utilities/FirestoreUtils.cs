@@ -14,6 +14,7 @@ namespace Externals.Utilities
         public static QuerySnapshot GetSnapshot(this Query query) => query.GetSnapshotAsync().GetAwaiter().GetResult();
         public static DocumentSnapshot GetSnapshot(this DocumentReference doc) => doc.GetSnapshotAsync().GetAwaiter().GetResult();
         public static WriteResult Create(this DocumentReference document, object documentData) => document.CreateAsync(documentData).GetAwaiter().GetResult();
+        public static WriteResult Delete(this Query document) => document.FirstDocument().DeleteAsync().GetAwaiter().GetResult();
         public static WriteResult Set(this DocumentReference document, object documentData) => document.SetAsync(documentData).GetAwaiter().GetResult();
         public static DocumentReference FirstDocument(this Query query)
         {

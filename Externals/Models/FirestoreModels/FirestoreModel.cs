@@ -13,7 +13,7 @@ namespace Externals.Models.FirestoreModels
         public virtual void CreateDocument(VirtualServerDatabase db) { }
         public virtual void UpdateDocument(VirtualServerDatabase db) { }
         public abstract void UpdateDocument(FirestoreDb db);
-        public abstract void CreateDocument(FirestoreDb db);
+        public abstract WriteResult CreateDocument(FirestoreDb db);
         public abstract DocumentReference GetDocument(FirestoreDb db);
         public abstract void UpdateFieldAsync(FirestoreDb db, string field, object data);
     }

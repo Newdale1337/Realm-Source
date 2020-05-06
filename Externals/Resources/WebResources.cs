@@ -24,8 +24,6 @@ namespace Externals.Resources
             INIT = File.ReadAllText("Resources/Web/Application/Init.xml");
             GLOBAL_NEWS = File.ReadAllText("Resources/Web/Application/GlobalNews.json");
             GUEST_ACCOUNT = File.ReadAllText("Resources/Web/GuestCharList.xml");
-
-            LoggingUtils.LogIfDebug($"Webresources loaded ({typeof(WebResources).GetProperties().Length})");
         }
     }
 }

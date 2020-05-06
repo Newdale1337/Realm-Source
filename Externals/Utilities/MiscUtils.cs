@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using Google.Cloud.Firestore;
 
@@ -17,6 +19,17 @@ namespace Externals.Utilities
             }
 
             return ret;
+        }
+
+        public static bool AddOrForget(this IList list, object obj)
+        {
+            if (!list.Contains(obj))
+            {
+                list.Add(obj);
+                return true;
+            }
+
+            return false;
         }
 
         public static async Task RunAsync(Action a)

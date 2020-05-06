@@ -10,4 +10,3 @@ C:\Users\willi\source\repos\MPGH-Source\Output\Externals.pdb
 C:\Users\willi\source\repos\MPGH-Source\Externals\obj\Debug\Externals.csproj.CopyComplete
 C:\Users\willi\source\repos\MPGH-Source\Externals\obj\Debug\Externals.dll
 C:\Users\willi\source\repos\MPGH-Source\Externals\obj\Debug\Externals.pdb
-C:\Users\willi\source\repos\MPGH-Source\Externals\obj\Debug\Externals.csprojAssemblyReference.cache

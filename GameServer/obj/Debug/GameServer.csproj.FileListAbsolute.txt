@@ -4,3 +4,10 @@ C:\Users\willi\source\repos\MPGH-Source\Output\GameServer.pdb
 C:\Users\willi\source\repos\MPGH-Source\GameServer\obj\Debug\GameServer.csprojAssemblyReference.cache
 C:\Users\willi\source\repos\MPGH-Source\GameServer\obj\Debug\GameServer.exe
 C:\Users\willi\source\repos\MPGH-Source\GameServer\obj\Debug\GameServer.pdb
+C:\Users\willi\source\repos\MPGH-Source\Output\grpc_csharp_ext.x86.dll
+C:\Users\willi\source\repos\MPGH-Source\Output\grpc_csharp_ext.x64.dll
+C:\Users\willi\source\repos\MPGH-Source\Output\libgrpc_csharp_ext.x86.so
+C:\Users\willi\source\repos\MPGH-Source\Output\libgrpc_csharp_ext.x64.so
+C:\Users\willi\source\repos\MPGH-Source\Output\libgrpc_csharp_ext.x86.dylib
+C:\Users\willi\source\repos\MPGH-Source\Output\libgrpc_csharp_ext.x64.dylib
+C:\Users\willi\source\repos\MPGH-Source\GameServer\obj\Debug\GameServer.csproj.CopyComplete

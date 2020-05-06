@@ -19,8 +19,11 @@ namespace Externals.Utilities
         public static bool BoolElement(this XElement elem, string name, bool def = false) => TryParse(elem?.Element(name)?.Value, def);
         public static bool BoolAtr(this XElement elem, string name, bool def = false) => TryParse(elem?.Attribute(name)?.Value, def);
 
-        public static string StringElement(this XElement elem, string name) => elem?.Element(name)?.Value ?? string.Empty;
-        public static string StringAtr(this XElement elem, string name) => elem?.Attribute(name)?.Value ?? string.Empty;
+        public static string StringElement(this XElement elem, string name, string def = "") => elem?.Element(name)?.Value ?? def;
+        public static string StringAtr(this XElement elem, string name, string def = "") => elem?.Attribute(name)?.Value ?? def;
+
+        public static bool HasElement(this XElement elem, string name) => elem?.Element(name)?.Value != null;
+        public static bool HasAttribute(this XElement elem, string name) => elem?.Attribute(name)?.Value != null;
 
         public static bool TryParse(this string val, bool def)
         {
@@ -29,6 +32,7 @@ namespace Externals.Utilities
 
             return res;
         }
+
         public static double TryParse(this string val, double def)
         {
             if (!double.TryParse(val, NumberStyles.Any, CultureInfo.InvariantCulture, out double res))
@@ -36,6 +40,7 @@ namespace Externals.Utilities
 
             return res;
         }
+
         public static float TryParse(this string val, float def)
         {
             if (!float.TryParse(val, NumberStyles.Any, CultureInfo.InvariantCulture, out float res))
@@ -43,8 +48,11 @@ namespace Externals.Utilities
 
             return res;
         }
+
         public static int TryParse(this string val, int def)
         {
+            if (string.IsNullOrWhiteSpace(val)) return -1;
+
             var isHex = val.Contains("0x");
 
             if (isHex)

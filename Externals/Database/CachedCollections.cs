@@ -44,6 +44,7 @@ namespace Externals.Database
             using (VirtualServerDatabase db = Database)
             {
                 LoggingUtils.LogIfDebug("Database deliver thread setup and ready to use");
+
                 while (DeliverCache)
                 {
                     WaitEvent.WaitOne(DeliveryTimeout * 200);

@@ -35,6 +35,10 @@
     <LangVersion>8</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Google.Cloud.Firestore, Version=1.1.0.0, Culture=neutral, PublicKeyToken=185c282632e132a0" />
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -45,11 +49,37 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Objects\BaseObject.cs" />
+    <Compile Include="Core\Objects\ObjectStorage.cs" />
+    <Compile Include="Core\Objects\Player.cs" />
+    <Compile Include="Core\Worlds\Nexus.cs" />
+    <Compile Include="Core\Worlds\IWorld.cs" />
+    <Compile Include="Core\Worlds\WorldManager.cs" />
+    <Compile Include="Core\Worlds\WorldParser.cs" />
+    <Compile Include="Networking\ConnectionEstablisher.cs" />
+    <Compile Include="Networking\MessageRW.cs" />
+    <Compile Include="Networking\Messaging\IncomingMessages\CreateMessage.cs" />
+    <Compile Include="Networking\Messaging\IncomingMessages\HelloMessage.cs" />
+    <Compile Include="Networking\Messaging\IncomingMessages\LoadMessage.cs" />
+    <Compile Include="Networking\Messaging\Message.cs" />
+    <Compile Include="Networking\Messaging\MessagePooler.cs" />
+    <Compile Include="Networking\Messaging\OutgoingMessages\FailureMessage.cs" />
+    <Compile Include="Networking\Messaging\OutgoingMessages\MapInfoMessage.cs" />
+    <Compile Include="Networking\NetworkClient.cs" />
+    <Compile Include="Networking\CoreManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Externals\Externals.csproj">
+      <Project>{CB8429E0-4DEF-44D3-A8B0-7BD3AFDEED83}</Project>
+      <Name>Externals</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

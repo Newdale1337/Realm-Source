@@ -8,7 +8,7 @@ namespace VirtualServer.Requests.Account
 {
     public class Register : WebRequest
     {
-        public override string RequestType => "/account/register";
+        public override string RequestType => REGISTER;
 
         public override void Handle(RequestContext requestContext, NameValueCollection query)
         {

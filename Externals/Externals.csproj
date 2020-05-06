@@ -38,6 +38,9 @@
     <Reference Include="Anna, Version=1.0.1006.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Anna.1.0.1008\lib\net40\Anna.dll</HintPath>
     </Reference>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.6.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\packages\BouncyCastle.1.8.6.1\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
     <Reference Include="Google.Api.CommonProtos, Version=1.7.0.0, Culture=neutral, PublicKeyToken=3ec5ea7f18953e47, processorArchitecture=MSIL">
       <HintPath>..\packages\Google.Api.CommonProtos.1.7.0\lib\net45\Google.Api.CommonProtos.dll</HintPath>
     </Reference>
@@ -83,8 +86,11 @@
     <Reference Include="Grpc.Core.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d754f35622e28bad, processorArchitecture=MSIL">
       <HintPath>..\packages\Grpc.Core.Api.1.22.1\lib\net45\Grpc.Core.Api.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Ionic.Zlib, Version=1.9.1.5, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ionic.Zlib.1.9.1.5\lib\Ionic.Zlib.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Collections.Immutable, Version=1.2.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -118,33 +124,48 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\PetYardTypes.cs" />
+    <Compile Include="Cryptography\RC4.cs" />
+    <Compile Include="Cryptography\RSA.cs" />
     <Compile Include="Database\CachedCollections.cs" />
+    <Compile Include="Database\DbListeners.cs" />
     <Compile Include="Database\FirestoreDatabase.cs" />
+    <Compile Include="Database\GameServerDatabase.cs" />
     <Compile Include="Database\Returnables\RegisterReturns.cs" />
     <Compile Include="Database\Returnables\VerifyReturns.cs" />
     <Compile Include="Database\VirtualServerDatabase.cs" />
-    <Compile Include="Models\FirestoreModels\AccountLockModel.cs" />
-    <Compile Include="Models\FirestoreModels\AccountModel.cs" />
-    <Compile Include="Models\FirestoreModels\CaimpaignsModel.cs" />
-    <Compile Include="Models\FirestoreModels\ClassStatsModel.cs" />
-    <Compile Include="Models\FirestoreModels\CurrenciesModel.cs" />
+    <Compile Include="Models\FirestoreModels\Account\AccountLockModel.cs" />
+    <Compile Include="Models\FirestoreModels\Account\AccountModel.cs" />
+    <Compile Include="Models\FirestoreModels\Account\CaimpaignsModel.cs" />
+    <Compile Include="Models\FirestoreModels\Account\ClassStatsModel.cs" />
+    <Compile Include="Models\FirestoreModels\Account\CurrenciesModel.cs" />
+    <Compile Include="Models\FirestoreModels\Character\CharacterModel.cs" />
     <Compile Include="Models\FirestoreModels\FirestoreModel.cs" />
     <Compile Include="Models\FirestoreModels\LoginModel.cs" />
     <Compile Include="Models\AudioResource.cs" />
+    <Compile Include="Models\FirestoreModels\NewsItemModel.cs" />
+    <Compile Include="Models\FirestoreModels\ServerModel.cs" />
+    <Compile Include="Models\GameDataModels\GroundLibrary.cs" />
+    <Compile Include="Models\GameDataModels\GroundProperties.cs" />
     <Compile Include="Models\GameDataModels\ObjectLibrary.cs" />
     <Compile Include="Models\GameDataModels\ObjectProperties.cs" />
-    <Compile Include="Models\XmlModels\ServerModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\GameResources.cs" />
     <Compile Include="Resources\WebResources.cs" />
+    <Compile Include="SafeClose.cs" />
     <Compile Include="Settings\ConsoleSettings.cs" />
     <Compile Include="Settings\DatabaseSettings.cs" />
+    <Compile Include="Settings\GameServerSettings.cs" />
+    <Compile Include="Settings\MutualServerSettings.cs" />
     <Compile Include="Settings\VirtualServerSettings.cs" />
+    <Compile Include="Utilities\ArrayUtils.cs" />
+    <Compile Include="Utilities\ClientRandom.cs" />
     <Compile Include="Utilities\DictionaryUtils.cs" />
     <Compile Include="Utilities\FirestoreUtils.cs" />
+    <Compile Include="Utilities\IonicUtils.cs" />
     <Compile Include="Utilities\JsonUtils.cs" />
     <Compile Include="Utilities\LoggingUtils.cs" />
     <Compile Include="Utilities\MiscUtils.cs" />
+    <Compile Include="Utilities\RandomUtils.cs" />
     <Compile Include="Utilities\RotmgUtils.cs" />
     <Compile Include="Utilities\StringUtils.cs" />
     <Compile Include="Utilities\WebServerUtils.cs" />

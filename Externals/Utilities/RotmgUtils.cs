@@ -32,7 +32,8 @@ namespace Externals.Utilities
             {"Necromancer", "unrestricted"},
             {"Warrior", "unrestricted"},
             {"Knight", "unrestricted"},
-            {"Paladin", "unrestricted"}
+            {"Paladin", "unrestricted"},
+            {"Samurai", "unrestricted"},
         };
     }
 }

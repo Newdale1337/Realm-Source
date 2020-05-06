@@ -9,6 +9,9 @@ using System.Text.RegularExpressions;
 using Externals.Constants;
 using Externals.Database.Returnables;
 using Externals.Models.FirestoreModels;
+using Externals.Models.GameDataModels;
+using Externals.Resources;
+using Externals.Settings;
 using Externals.Utilities;
 
 namespace Externals.Database
@@ -16,12 +19,14 @@ namespace Externals.Database
     public class VirtualServerDatabase : FirestoreDatabase, IDisposable
     {
         private Random Random { get; set; }
+        private List<int> Skins { get;}
+        private List<ClassStatsModel> NewbieStats { get;}
 
         public VirtualServerDatabase()
         {
             Random = new Random(Environment.TickCount);
-
-            LoggingUtils.LogIfDebug("New VirtualServerDatabase created.");
+            Skins = GetSkins();
+            NewbieStats = GetNewbieClassStats();
         }
 
         public AccountModel GetGuestAccount()
@@ -43,33 +48,12 @@ namespace Externals.Database
                 PetYardType = PetYardTypes.Common,
                 CharacterCount = 1,
                 BestCharFame = 0,
-                ClassStats = new List<ClassStatsModel>(),
+                ClassStats = NewbieStats,
                 Campaigns = new List<CaimpaignsModel>(),
-                AccountLock = new AccountLockModel { AccountInUse = false,},
-                IpAddresses = new List<string>(),
-                SecurityQuestions = new string[3]
+                AccountLock = new AccountLockModel { AccountInUse = false, },
+                IpAddresses = new List<string>()
             };
         }
-
-        private List<ClassStatsModel> GetClassStats()
-        {
-            return null;
-        }
-
-        public AccountModel Verify(string guid, string password)
-        {
-            var login = CachedLogins.FirstOrDefault(x => string.Equals(x.Guid, guid, StringComparison.InvariantCultureIgnoreCase));
-
-            if (login == null)
-                return null;
-
-            if (!login.Hash.Equals(GenerateHash(password + login.Salt)))
-                return null;
-
-            return GetAccountById(login.AccountId);
-        }
-
-        private AccountModel GetAccountById(int id) => CachedAccounts.FirstOrDefault(x => x.AccountId == id);
 
         public string Register(string guid, string password, string name, string ip)
         {
@@ -88,9 +72,20 @@ namespace Externals.Database
             CreateAndSendLoginModel(guid, password, name, accountId);
             AccountModel acc = CreateAndSendAccountModel(ip, accountId, name);
 
+            LoggingUtils.LogIfDebug(acc.Token);
             LoggingUtils.LogIfDebug($"Creating new account {{ {guid} }}");
 
             return acc.Token;
+        }
+
+        private List<int> GetSkins()
+        {
+            var ret = new List<int>();
+
+            foreach (var skin in ObjectLibrary.Properties.Values.Where(x => x.Skin))
+                ret.Add(skin.Type);
+
+            return ret;
         }
 
         private AccountModel CreateAndSendAccountModel(string ip, int accountId, string name)
@@ -100,27 +95,47 @@ namespace Externals.Database
             currencies.Fame = 0;
             currencies.TotalFame = 0;
             currencies.FortuneTokens = 0;
+
             var account = new AccountModel
             {
                 AccountId = accountId,
                 Currencies = currencies,
                 CreationDate = DateTime.UtcNow,
                 Name = name,
-                ClassStats = new List<ClassStatsModel>(),
                 Admin = false,
+                BestCharFame = 0,
+                CharacterCount = 2,
+                CharacterSlotPrice = 600,
+                Mod = false,
+                MapCreator = false,
+                VerifiedGuid = !MutualServerSettings.NeedsGuidVerification,
+                NextCharacterId = 0,
+                OwnedSkins = Skins,
+                ClassStats = NewbieStats,
                 PetYardType = PetYardTypes.Common,
                 Token = StringUtils.GetRandomString(40),
-                BestCharFame = 0,
                 Campaigns = new List<CaimpaignsModel>(),
-                SecurityQuestions = new string[3],
-                IpAddresses = new List<string>() { ip },
-                AccountLock = new AccountLockModel {AccountInUse = false,},
-                CharacterCount = 2
+                IpAddresses = new List<string> { ip },
+                AccountLock = new AccountLockModel
+                {
+                    AccountInUse = false,
+                    AcquiredLock = DateTime.UtcNow
+                },
             };
 
             account.CreateDocument(Api);
 
             return account;
+        }
+
+        private List<ClassStatsModel> GetNewbieClassStats()
+        {
+            var stats = new List<ClassStatsModel>();
+
+            foreach (var prop in ObjectLibrary.Properties.Values.Where(x => x.Player))
+                stats.Add(new ClassStatsModel { BestFame = 0, BestLevel = 0, ObjectType = prop.Type });
+
+            return stats;
         }
 
         private void CreateAndSendLoginModel(string guid, string password, string name, int accountId)
@@ -149,11 +164,11 @@ namespace Externals.Database
                 int nextId = Random.Next(int.MaxValue);
                 if (logins.All(x => x.AccountId != nextId))
                     accountId = nextId;
+
             } while (accountId == -1);
 
             return accountId;
         }
-        private string GenerateHash(string text) => Convert.ToBase64String(new SHA1Managed().ComputeHash(Encoding.UTF8.GetBytes(text)));
 
         public void Dispose()
         {

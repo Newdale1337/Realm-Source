@@ -30,5 +30,7 @@ namespace VirtualServer
         {
             LoggingUtils.LogWarningIfDebug($"'{requestContext.Request.Url.LocalPath}' does not have a handler @{requestContext.Request.GetIp()}");
         }
+
+        public const string REGISTER = "/account/register";
     }
 }

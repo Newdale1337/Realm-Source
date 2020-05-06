@@ -7,47 +7,61 @@ namespace Externals.Models.GameDataModels
 {
     public class ObjectLibrary
     {
-
-        public static Dictionary<string, ObjectProperties> IdToProperties { get; set; }
-        private static Dictionary<string, int> IdToType { get; set; }
-        private static Dictionary<int, ObjectProperties> TypeToProperties { get; set; }
-        private static Dictionary<int, string> TypeToId { get; set; }
+        public static Dictionary<string, int> IdToType { get; set; }
+        public static Dictionary<int, ObjectProperties> Properties { get; set; }
+        public static Dictionary<int, string> TypeToId { get; set; }
 
         public static ObjectProperties GetProperties(int type)
         {
-            if (TypeToProperties.TryGetValue(type, out ObjectProperties props))
+            if (Properties.TryGetValue(type, out var props))
                 return props;
 
             return null;
         }
+
+        public static int IdToObjectType(string id)
+        {
+            if (!IdToType.TryGetValue(id, out int type))
+            {
+                LoggingUtils.LogWarningIfDebug($"{id} Not found");
+                return -1;
+            }
+
+            return type;
+        }
+
         public static ObjectProperties GetProperties(string id)
         {
-            if (IdToProperties.TryGetValue(id, out ObjectProperties props))
-                return props;
+            if (IdToType.TryGetValue(id, out var props))
+                return GetProperties(props);
 
             return null;
         }
 
         public static void Initialize()
         {
-            IdToProperties = new Dictionary<string, ObjectProperties>(StringComparer.InvariantCultureIgnoreCase);
             IdToType = new Dictionary<string, int>(StringComparer.InvariantCultureIgnoreCase);
-
-            TypeToProperties = new Dictionary<int, ObjectProperties>();
+            Properties = new Dictionary<int, ObjectProperties>();
             TypeToId = new Dictionary<int, string>();
-
-            LoggingUtils.LogIfDebug("ObjectLibrary Initialized");
         }
 
-        public static void ParseJson(XElement elem)
+        public static void ParseXml(XElement elem)
         {
             int type = elem.IntAtr("type");
             string id = elem.StringAtr("id");
 
-            TypeToProperties[type] = new ObjectProperties(elem, id, type);
-            IdToProperties[id] = new ObjectProperties(elem, id, type);
+            Properties[type] = new ObjectProperties(elem, id, type);
             IdToType[id] = type;
             TypeToId[type] = id;
+        }
+
+        public static void Unload()
+        {
+            Properties.Clear();
+            IdToType.Clear();
+            TypeToId.Clear();
+
+            LoggingUtils.LogIfDebug("ObjectLibrary unloaded.");
         }
     }
 }

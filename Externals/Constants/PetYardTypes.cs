@@ -8,4 +8,9 @@
         public const int Legendary = 4;
         public const int Divine = 5;
     }
+
+    public class ItemRarities
+    {
+        public const int Common = 1;
+    }
 }
